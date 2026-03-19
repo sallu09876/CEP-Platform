@@ -6,6 +6,9 @@ import Sidebar from './components/Sidebar';
 import Navbar from './components/Navbar';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
+import Customers from './pages/Customers';
+import Campaigns from './pages/Campaigns';
+import CreateCampaign from './pages/CreateCampaign';
 
 const ComingSoon = ({ title }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -28,14 +31,6 @@ const ComingSoon = ({ title }) => {
   );
 };
 
-const placeholderRoutes = [
-  { path: '/customers', title: 'Customers' },
-  { path: '/campaigns', title: 'Campaigns' },
-  { path: '/campaign-logs', title: 'Campaign Logs' },
-  { path: '/analytics', title: 'Analytics' },
-  { path: '/settings', title: 'Settings' },
-];
-
 function App() {
   return (
     <BrowserRouter>
@@ -43,25 +38,13 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
-          <Route
-            path="/dashboard"
-            element={
-              <ProtectedRoute>
-                <Dashboard />
-              </ProtectedRoute>
-            }
-          />
-          {placeholderRoutes.map(({ path, title }) => (
-            <Route
-              key={path}
-              path={path}
-              element={
-                <ProtectedRoute>
-                  <ComingSoon title={title} />
-                </ProtectedRoute>
-              }
-            />
-          ))}
+          <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+          <Route path="/customers" element={<ProtectedRoute><Customers /></ProtectedRoute>} />
+          <Route path="/campaigns" element={<ProtectedRoute><Campaigns /></ProtectedRoute>} />
+          <Route path="/campaigns/create" element={<ProtectedRoute><CreateCampaign /></ProtectedRoute>} />
+          <Route path="/campaign-logs" element={<ProtectedRoute><ComingSoon title="Campaign Logs" /></ProtectedRoute>} />
+          <Route path="/analytics" element={<ProtectedRoute><ComingSoon title="Analytics" /></ProtectedRoute>} />
+          <Route path="/settings" element={<ProtectedRoute><ComingSoon title="Settings" /></ProtectedRoute>} />
           <Route path="*" element={<Navigate to="/dashboard" replace />} />
         </Routes>
       </AuthProvider>
